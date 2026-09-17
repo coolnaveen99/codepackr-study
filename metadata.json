@@ -1,0 +1,6 @@
+{
+  "name": "Codepackr Study",
+  "description": "100% client-side student and exam tools suite including GPA calculator, citation generators, flashcards, and unit converters.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
