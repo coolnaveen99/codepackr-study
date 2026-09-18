@@ -11,32 +11,24 @@ All tools run **100% client-side**. Your academic data never leaves your device.
 
 ---
 
-## 📚 Planned Tools Directory
+## 📚 Tools Directory
 
 ### Academic Calculators
-- GPA / CGPA Calculator (Indian + international scales)
-- Percentage / Grade Calculator
-- Grade to Percentage Converter
-- Weighted Grade Calculator
+- **[GPA & CGPA Calculator](/#/gpa-calculator)** — US 4.0 letter grade and Indian 10.0 UGC/AICTE semester & cumulative GPA scales with credit weighting and honors detection.
+- **[Grade & Final Exam Target Calculator](/#/grade-calculator)** — Weighted syllabus categories, simple average, and target final exam score calculator.
 
 ### Writing & Citations
-- APA Citation Generator
-- MLA Citation Generator
-- Chicago Citation Generator
-- Harvard Citation Generator
-- Word / Character Counter + Reading Time
+- **[APA & MLA Citation Generator](/#/citation-generator)** — Formatter for APA 7th, MLA 9th, Harvard, and Chicago citation styles across Books, Academic Journals, and Websites with in-text references.
+- **[Word Counter & Readability Analyzer](/#/word-counter)** — Word, character, sentence count, reading and speaking duration estimations, and keyword frequency analyzer.
 
-### Study Aids
-- Flashcard Generator + Practice Mode
-- Simple Spaced Repetition
-- Exam Timer
-- Score Calculator
+### Study Aids & Timers
+- **[Flashcard Generator & Practice Mode](/#/flashcard-generator)** — Custom study deck builder with 3D card flip, spacebar shortcuts, active recall self-scoring, and shuffle.
+- **[Exam & Pomodoro Focus Timer](/#/study-timer)** — 25m Pomodoro, 50m Deep Work, and 60m Mock Exam countdowns with audio chimes and cycle counters.
 
-### Science Tools
-- Unit Converters (Physics, Chemistry, Math)
-- Scientific helpers
+### Science & Converters
+- **[Science & Math Unit Converters](/#/unit-converters)** — High-precision conversion across Length, Mass, Temperature, Pressure, Energy, Speed, Angles, and Digital Storage.
 
-> Tools will be added following the strict process in [`.github/skills/add-new-tool.md`](.github/skills/add-new-tool.md).
+> Every tool features **Sample Data**, **Reset**, and **Copy Result** capabilities with zero data leaving the browser.
 
 ---
 
