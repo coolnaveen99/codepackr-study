@@ -1,0 +1,5 @@
+# Codepackr Study — https://study.codepackr.com
+User-agent: *
+Allow: /
+
+Sitemap: https://study.codepackr.com/sitemap.xml
