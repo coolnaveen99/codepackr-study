@@ -3,6 +3,7 @@ import { Header } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
 import { SearchModal } from './components/layout/SearchModal'
 import { HomeView } from './components/HomeView'
+import { ContactView } from './components/ContactView'
 import { GpaCalculator } from './components/tools/GpaCalculator'
 import { GradeCalculator } from './components/tools/GradeCalculator'
 import { WordCounter } from './components/tools/WordCounter'
@@ -27,11 +28,10 @@ export default function App() {
     const slug = getCurrentSlug()
     return getToolBySlug(slug) || null
   })
-
+  const [showContact, setShowContact] = useState(() => getCurrentSlug() === 'contact')
   const [searchOpen, setSearchOpen] = useState(false)
   const [homeSearchQuery, setHomeSearchQuery] = useState('')
 
-  // Sync dark theme to root element & localStorage
   useEffect(() => {
     if (dark) {
       document.documentElement.classList.add('dark')
@@ -42,16 +42,18 @@ export default function App() {
     }
   }, [dark])
 
-  // Hash & Popstate routing sync
   const syncRoute = useCallback(() => {
     const slug = getCurrentSlug()
+    if (slug === 'contact') {
+      setShowContact(true)
+      setCurrentTool(null)
+      document.title = 'Contact — Codepackr Study'
+      return
+    }
+    setShowContact(false)
     const tool = getToolBySlug(slug)
     setCurrentTool(tool || null)
-    if (tool) {
-      document.title = `${tool.name} — Codepackr Study`
-    } else {
-      document.title = 'Codepackr Study — 100% Client-Side Student & Exam Tools'
-    }
+    document.title = tool ? `${tool.name} — Codepackr Study` : 'Codepackr Study — 100% Client-Side Student & Exam Tools'
   }, [])
 
   useEffect(() => {
@@ -64,7 +66,6 @@ export default function App() {
     }
   }, [syncRoute])
 
-  // Global keyboard shortcut: Ctrl+K / Cmd+K
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -77,82 +78,54 @@ export default function App() {
   }, [])
 
   const handleSelectTool = (tool: ToolDefinition) => {
+    setShowContact(false)
     setCurrentTool(tool)
     window.location.hash = `#/${tool.slug}`
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleGoHome = () => {
+    setShowContact(false)
     setCurrentTool(null)
     window.location.hash = ''
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const handleOpenContact = () => {
+    setCurrentTool(null)
+    setShowContact(true)
+    window.location.hash = '#/contact'
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   const renderToolComponent = () => {
     if (!currentTool) return null
-
     switch (currentTool.id) {
-      case 'gpa-calculator':
-        return <GpaCalculator onBack={handleGoHome} />
-      case 'grade-calculator':
-        return <GradeCalculator onBack={handleGoHome} />
-      case 'word-counter':
-        return <WordCounter onBack={handleGoHome} />
-      case 'citation-generator':
-        return <CitationGenerator onBack={handleGoHome} />
-      case 'flashcard-generator':
-        return <FlashcardGenerator onBack={handleGoHome} />
-      case 'unit-converters':
-        return <UnitConverters onBack={handleGoHome} />
-      case 'study-timer':
-        return <StudyTimer onBack={handleGoHome} />
-      default:
-        return (
-          <div className="text-center py-16">
-            <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Tool Not Found</h2>
-            <button
-              onClick={handleGoHome}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white font-semibold text-xs"
-            >
-              Back to All Tools
-            </button>
-          </div>
-        )
+      case 'gpa-calculator': return <GpaCalculator onBack={handleGoHome} />
+      case 'grade-calculator': return <GradeCalculator onBack={handleGoHome} />
+      case 'word-counter': return <WordCounter onBack={handleGoHome} />
+      case 'citation-generator': return <CitationGenerator onBack={handleGoHome} />
+      case 'flashcard-generator': return <FlashcardGenerator onBack={handleGoHome} />
+      case 'unit-converters': return <UnitConverters onBack={handleGoHome} />
+      case 'study-timer': return <StudyTimer onBack={handleGoHome} />
+      default: return null
     }
   }
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col font-sans">
-      {/* Header */}
-      <Header
-        dark={dark}
-        onToggleTheme={() => setDark(!dark)}
-        onOpenSearch={() => setSearchOpen(true)}
-        onGoHome={handleGoHome}
-      />
-
-      {/* Main Content Area */}
+      <Header dark={dark} onToggleTheme={() => setDark(!dark)} onOpenSearch={() => setSearchOpen(true)} onGoHome={handleGoHome} />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
-        {currentTool ? (
+        {showContact ? (
+          <ContactView onBack={handleGoHome} />
+        ) : currentTool ? (
           renderToolComponent()
         ) : (
-          <HomeView
-            onSelectTool={handleSelectTool}
-            searchQuery={homeSearchQuery}
-            setSearchQuery={setHomeSearchQuery}
-          />
+          <HomeView onSelectTool={handleSelectTool} searchQuery={homeSearchQuery} setSearchQuery={setHomeSearchQuery} />
         )}
       </main>
-
-      {/* Footer */}
-      <Footer onSelectTool={handleSelectTool} />
-
-      {/* Cmd+K Search Modal */}
-      <SearchModal
-        isOpen={searchOpen}
-        onClose={() => setSearchOpen(false)}
-        onSelectTool={handleSelectTool}
-      />
+      <Footer onSelectTool={handleSelectTool} onOpenContact={handleOpenContact} />
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} onSelectTool={handleSelectTool} />
     </div>
   )
 }
