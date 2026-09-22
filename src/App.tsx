@@ -145,13 +145,7 @@ export default function App() {
         ) : currentTool ? (
           renderToolComponent()
         ) : (
-          <HomeView
-            onSelectTool={handleSelectTool}
-            searchQuery={homeSearchQuery}
-            setSearchQuery={setHomeSearchQuery}
-            selectedCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
+          <HomeView onSelectTool={handleSelectTool} searchQuery={homeSearchQuery} setSearchQuery={setHomeSearchQuery} />
         )}
       </main>
       <Footer onSelectTool={handleSelectTool} onOpenContact={handleOpenContact} />
