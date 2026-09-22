@@ -1,0 +1,41 @@
+name: Study Release — Build Artifact
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release-study:
+    name: Build & Publish Study Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Study
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate TypeScript
+        run: npm run lint
+
+      - name: Build Study
+        run: npm run build
+
+      - name: Package dist
+        run: zip -r codepackr-study-${{ github.ref_name }}-dist.zip dist/
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: codepackr-study-${{ github.ref_name }}-dist.zip
+          generate_release_notes: true
