@@ -1,11 +1,11 @@
 import React from 'react'
-import { Search, GraduationCap, Menu } from 'lucide-react'
+import { Search, GraduationCap, Menu, X } from 'lucide-react'
 
 interface HeaderProps {
   onOpenSearch: () => void
   onGoHome: () => void
-  onToggleSidebar?: () => void
-  sidebarOpen?: boolean
+  onToggleSidebar: () => void
+  sidebarOpen: boolean
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,21 +16,20 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   return (
     <header className="border-b border-slate-200 bg-white/90 backdrop-blur sticky top-0 z-40 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          {onToggleSidebar && (
-            <button
-              type="button"
-              id="sidebar-toggle-btn"
-              onClick={onToggleSidebar}
-              className="p-2 rounded-xl border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-colors shrink-0"
-              aria-label={sidebarOpen ? 'Close navigation sidebar' : 'Open navigation sidebar'}
-              aria-expanded={sidebarOpen}
-              aria-controls="app-sidebar"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
-          )}
+          {/* Left hamburger — same pattern as Tools / Finance */}
+          <button
+            type="button"
+            id="sidebar-toggle-btn"
+            onClick={onToggleSidebar}
+            className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors shrink-0 shadow-sm"
+            aria-label={sidebarOpen ? 'Close navigation sidebar' : 'Open navigation sidebar'}
+            aria-expanded={sidebarOpen}
+            aria-controls="app-sidebar"
+          >
+            {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
 
           <button
             onClick={onGoHome}
