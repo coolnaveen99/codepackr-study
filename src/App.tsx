@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { Header } from './components/layout/Header'
+import { CodepackrFamilyBar } from './components/CodepackrFamilyBar'
 import { Footer } from './components/layout/Footer'
 import { SearchModal } from './components/layout/SearchModal'
 import { HomeView } from './components/HomeView'
@@ -114,6 +115,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col font-sans">
+      <CodepackrFamilyBar />
       <Header dark={dark} onToggleTheme={() => setDark(!dark)} onOpenSearch={() => setSearchOpen(true)} onGoHome={handleGoHome} />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
         {showContact ? (
