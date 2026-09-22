@@ -16,15 +16,6 @@ import { ToolDefinition } from './types'
 import { getToolBySlug, getCurrentSlug } from './lib/urls'
 
 export default function App() {
-  const [dark, setDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('codepackr_study_theme')
-      if (saved) return saved === 'dark'
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-    }
-    return false
-  })
-
   const [currentTool, setCurrentTool] = useState<ToolDefinition | null>(() => {
     const slug = getCurrentSlug()
     return getToolBySlug(slug) || null
@@ -33,15 +24,11 @@ export default function App() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [homeSearchQuery, setHomeSearchQuery] = useState('')
 
+  // Enforce light mode only
   useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add('dark')
-      localStorage.setItem('codepackr_study_theme', 'dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.setItem('codepackr_study_theme', 'light')
-    }
-  }, [dark])
+    document.documentElement.classList.remove('dark')
+    localStorage.setItem('codepackr_study_theme', 'light')
+  }, [])
 
   const syncRoute = useCallback(() => {
     const slug = getCurrentSlug()
@@ -114,9 +101,9 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       <CodepackrFamilyBar />
-      <Header dark={dark} onToggleTheme={() => setDark(!dark)} onOpenSearch={() => setSearchOpen(true)} onGoHome={handleGoHome} />
+      <Header onOpenSearch={() => setSearchOpen(true)} onGoHome={handleGoHome} />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
         {showContact ? (
           <ContactView onBack={handleGoHome} />
