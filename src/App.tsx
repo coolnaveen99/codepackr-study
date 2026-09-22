@@ -12,6 +12,16 @@ import { CitationGenerator } from './components/tools/CitationGenerator'
 import { FlashcardGenerator } from './components/tools/FlashcardGenerator'
 import { UnitConverters } from './components/tools/UnitConverters'
 import { StudyTimer } from './components/tools/StudyTimer'
+import { AttendanceCalculator } from './components/tools/AttendanceCalculator'
+import { SgpaPercentage } from './components/tools/SgpaPercentage'
+import { MarksToGrade } from './components/tools/MarksToGrade'
+import { ParaphraseChecker } from './components/tools/ParaphraseChecker'
+import { EssayOutline } from './components/tools/EssayOutline'
+import { ResumeSopCounter } from './components/tools/ResumeSopCounter'
+import { QuizGenerator } from './components/tools/QuizGenerator'
+import { SpacedRepetition } from './components/tools/SpacedRepetition'
+import { ScientificCalculator } from './components/tools/ScientificCalculator'
+import { PeriodicTable } from './components/tools/PeriodicTable'
 import { ToolDefinition } from './types'
 import { getToolBySlug, getCurrentSlug } from './lib/urls'
 
@@ -24,7 +34,6 @@ export default function App() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [homeSearchQuery, setHomeSearchQuery] = useState('')
 
-  // Enforce light mode only
   useEffect(() => {
     document.documentElement.classList.remove('dark')
     localStorage.setItem('codepackr_study_theme', 'light')
@@ -91,11 +100,21 @@ export default function App() {
     switch (currentTool.id) {
       case 'gpa-calculator': return <GpaCalculator onBack={handleGoHome} />
       case 'grade-calculator': return <GradeCalculator onBack={handleGoHome} />
+      case 'attendance-calculator': return <AttendanceCalculator onBack={handleGoHome} />
+      case 'sgpa-percentage': return <SgpaPercentage onBack={handleGoHome} />
+      case 'marks-to-grade': return <MarksToGrade onBack={handleGoHome} />
       case 'word-counter': return <WordCounter onBack={handleGoHome} />
       case 'citation-generator': return <CitationGenerator onBack={handleGoHome} />
+      case 'paraphrase-checker': return <ParaphraseChecker onBack={handleGoHome} />
+      case 'essay-outline': return <EssayOutline onBack={handleGoHome} />
+      case 'resume-sop-counter': return <ResumeSopCounter onBack={handleGoHome} />
       case 'flashcard-generator': return <FlashcardGenerator onBack={handleGoHome} />
-      case 'unit-converters': return <UnitConverters onBack={handleGoHome} />
       case 'study-timer': return <StudyTimer onBack={handleGoHome} />
+      case 'quiz-generator': return <QuizGenerator onBack={handleGoHome} />
+      case 'spaced-repetition': return <SpacedRepetition onBack={handleGoHome} />
+      case 'unit-converters': return <UnitConverters onBack={handleGoHome} />
+      case 'scientific-calculator': return <ScientificCalculator onBack={handleGoHome} />
+      case 'periodic-table': return <PeriodicTable onBack={handleGoHome} />
       default: return null
     }
   }
