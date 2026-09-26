@@ -7,62 +7,25 @@ import { MobileBottomNav, STUDY_MOBILE_TABS } from './components/MobileBottomNav
 import { SearchModal } from './components/layout/SearchModal'
 import { HomeView } from './components/HomeView'
 import { ContactView } from './components/ContactView'
-import { GpaCalculator } from './components/tools/GpaCalculator'
-import { GradeCalculator } from './components/tools/GradeCalculator'
-import { WordCounter } from './components/tools/WordCounter'
-import { CitationGenerator } from './components/tools/CitationGenerator'
-import { FlashcardGenerator } from './components/tools/FlashcardGenerator'
-import { UnitConverters } from './components/tools/UnitConverters'
-import { StudyTimer } from './components/tools/StudyTimer'
-import { AttendanceCalculator } from './components/tools/AttendanceCalculator'
-import { SgpaPercentage } from './components/tools/SgpaPercentage'
-import { MarksToGrade } from './components/tools/MarksToGrade'
-import { ParaphraseChecker } from './components/tools/ParaphraseChecker'
-import { EssayOutline } from './components/tools/EssayOutline'
-import { ResumeSopCounter } from './components/tools/ResumeSopCounter'
-import { QuizGenerator } from './components/tools/QuizGenerator'
-import { SpacedRepetition } from './components/tools/SpacedRepetition'
-import { ScientificCalculator } from './components/tools/ScientificCalculator'
-import { PeriodicTable } from './components/tools/PeriodicTable'
-import { ToolDefinition } from './types'
-import { getToolBySlug, getCurrentSlug } from './lib/urls'
+import { ToolView } from './components/ToolView'
+import { TOOLS, getToolById } from './data/tools'
+import { getCurrentSlug, setToolUrl, setHomeUrl, setContactUrl } from './lib/routing'
 
 export default function App() {
-  const [currentTool, setCurrentTool] = useState<ToolDefinition | null>(() => {
-    const slug = getCurrentSlug()
-    return getToolBySlug(slug) || null
-  })
-  const [showContact, setShowContact] = useState(() => getCurrentSlug() === 'contact')
+  const [currentTool, setCurrentTool] = useState<string | null>(null)
+  const [showContact, setShowContact] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const [homeSearchQuery, setHomeSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [mobileTab, setMobileTab] = useState('home')
-  const [selectedCategory, setSelectedCategory] = useState<ToolDefinition['category'] | 'all'>('all')
 
-  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
-    if (typeof window === 'undefined') return 'light'
+  // Dark mode deferred — light theme only (MOBILE_PREMIUM_UX §1B).
+  useEffect(() => {
+    document.documentElement.classList.remove('dark')
     try {
-      const stored = localStorage.getItem('codepackr_study_theme')
-      if (stored === 'dark') return 'dark'
-      if (stored === 'light') return 'light'
+      if (localStorage.getItem('codepackr_study_theme') === 'dark') {
+        localStorage.setItem('codepackr_study_theme', 'light')
+      }
     } catch { /* ignore */ }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-  })
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark')
-    try { localStorage.setItem('codepackr_study_theme', theme) } catch { /* ignore */ }
-  }, [theme])
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => {
-      try {
-        const stored = localStorage.getItem('codepackr_study_theme')
-        if (stored === 'light' || stored === 'dark') return
-      } catch { /* ignore */ }
-      setTheme(mq.matches ? 'dark' : 'light')
-    }
-    mq.addEventListener?.('change', onChange)
-    return () => mq.removeEventListener?.('change', onChange)
   }, [])
 
   const syncRoute = useCallback(() => {
@@ -73,91 +36,60 @@ export default function App() {
       document.title = 'Contact — Codepackr Study'
       return
     }
+    if (slug && getToolById(slug)) {
+      setCurrentTool(slug)
+      setShowContact(false)
+      document.title = `${getToolById(slug)?.name ?? slug} — Codepackr Study`
+      return
+    }
+    setCurrentTool(null)
     setShowContact(false)
-    const tool = getToolBySlug(slug)
-    setCurrentTool(tool || null)
-    document.title = tool ? `${tool.name} — Codepackr Study` : 'Codepackr Study — 100% Client-Side Student & Exam Tools'
+    document.title = 'Codepackr Study — Student Tools'
   }, [])
 
   useEffect(() => {
-    window.addEventListener('hashchange', syncRoute)
-    window.addEventListener('popstate', syncRoute)
     syncRoute()
-    return () => {
-      window.removeEventListener('hashchange', syncRoute)
-      window.removeEventListener('popstate', syncRoute)
-    }
+    window.addEventListener('popstate', syncRoute)
+    return () => window.removeEventListener('popstate', syncRoute)
   }, [syncRoute])
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault()
-        setSearchOpen(prev => !prev)
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-  const handleSelectTool = (tool: ToolDefinition) => {
+  const openTool = (id: string) => {
+    setCurrentTool(id)
     setShowContact(false)
-    setCurrentTool(tool)
-    window.location.hash = `#/${tool.slug}`
+    setToolUrl(id)
+    setSearchOpen(false)
+    setSidebarOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const handleGoHome = () => {
-    setShowContact(false)
+  const goHome = () => {
     setCurrentTool(null)
-    window.location.hash = ''
+    setShowContact(false)
+    setHomeUrl()
+    setMobileTab('home')
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
-  const handleOpenContact = () => {
-    setCurrentTool(null)
+  const openContact = () => {
     setShowContact(true)
-    window.location.hash = '#/contact'
+    setCurrentTool(null)
+    setContactUrl()
+    setSidebarOpen(false)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const handleMobileTab = (tab: string) => {
     setMobileTab(tab)
-    if (tab === 'home') {
-      handleGoHome()
-    } else if (tab === 'subjects') {
-      handleGoHome()
+    if (tab === 'home') goHome()
+    else if (tab === 'subjects') {
       setSidebarOpen(true)
     } else if (tab === 'practice') {
-      setSearchOpen(true)
-    } else if (tab === 'progress') {
+      // open first practice-oriented tool or subjects
       setSidebarOpen(true)
+    } else if (tab === 'progress') {
+      goHome()
     } else if (tab === 'more') {
-      handleOpenContact()
-    }
-  }
-
-  const renderToolComponent = () => {
-    if (!currentTool) return null
-    switch (currentTool.id) {
-      case 'gpa-calculator': return <GpaCalculator onBack={handleGoHome} />
-      case 'grade-calculator': return <GradeCalculator onBack={handleGoHome} />
-      case 'attendance-calculator': return <AttendanceCalculator onBack={handleGoHome} />
-      case 'sgpa-percentage': return <SgpaPercentage onBack={handleGoHome} />
-      case 'marks-to-grade': return <MarksToGrade onBack={handleGoHome} />
-      case 'word-counter': return <WordCounter onBack={handleGoHome} />
-      case 'citation-generator': return <CitationGenerator onBack={handleGoHome} />
-      case 'paraphrase-checker': return <ParaphraseChecker onBack={handleGoHome} />
-      case 'essay-outline': return <EssayOutline onBack={handleGoHome} />
-      case 'resume-sop-counter': return <ResumeSopCounter onBack={handleGoHome} />
-      case 'flashcard-generator': return <FlashcardGenerator onBack={handleGoHome} />
-      case 'study-timer': return <StudyTimer onBack={handleGoHome} />
-      case 'quiz-generator': return <QuizGenerator onBack={handleGoHome} />
-      case 'spaced-repetition': return <SpacedRepetition onBack={handleGoHome} />
-      case 'unit-converters': return <UnitConverters onBack={handleGoHome} />
-      case 'scientific-calculator': return <ScientificCalculator onBack={handleGoHome} />
-      case 'periodic-table': return <PeriodicTable onBack={handleGoHome} />
-      default: return null
+      setSidebarOpen(true)
     }
   }
 
@@ -166,34 +98,38 @@ export default function App() {
       <CodepackrFamilyBar />
       <Header
         onOpenSearch={() => setSearchOpen(true)}
-        onGoHome={handleGoHome}
-        onToggleSidebar={() => setSidebarOpen((v) => !v)}
-        sidebarOpen={sidebarOpen}
+        onOpenSidebar={() => setSidebarOpen(true)}
+        onGoHome={goHome}
+        onOpenContact={openContact}
       />
-      <Sidebar
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-        selectedCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-        onSelectTool={handleSelectTool}
-        onGoHome={handleGoHome}
-      />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 cp-mobile-main-pad cp-page">
-        {showContact ? (
-          <ContactView onBack={handleGoHome} />
-        ) : currentTool ? (
-          renderToolComponent()
-        ) : (
-          <HomeView onSelectTool={handleSelectTool} searchQuery={homeSearchQuery} setSearchQuery={setHomeSearchQuery} />
-        )}
-      </main>
+      <div className="flex-1 flex w-full max-w-7xl mx-auto">
+        <Sidebar
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          onSelectTool={openTool}
+          currentTool={currentTool}
+        />
+        <main className="flex-1 min-w-0 px-4 sm:px-6 py-6 cp-mobile-main-pad">
+          {showContact ? (
+            <ContactView onBack={goHome} />
+          ) : currentTool ? (
+            <ToolView toolId={currentTool} onBack={goHome} onSelectRelated={openTool} />
+          ) : (
+            <HomeView onSelectTool={openTool} onOpenSearch={() => setSearchOpen(true)} />
+          )}
+        </main>
+      </div>
       <MobileBottomNav
+        tabs={STUDY_MOBILE_TABS}
         activeTab={mobileTab}
         onSelectTab={handleMobileTab}
-        tabs={STUDY_MOBILE_TABS}
       />
-      <Footer onSelectTool={handleSelectTool} onOpenContact={handleOpenContact} />
-      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} onSelectTool={handleSelectTool} />
+      <Footer onGoHome={goHome} onOpenContact={openContact} />
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onSelectTool={openTool}
+      />
     </div>
   )
 }
