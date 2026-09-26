@@ -39,9 +39,30 @@ export default function App() {
   const [mobileTab, setMobileTab] = useState('home')
   const [selectedCategory, setSelectedCategory] = useState<ToolDefinition['category'] | 'all'>('all')
 
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window === 'undefined') return 'light'
+    try {
+      const stored = localStorage.getItem('codepackr_study_theme')
+      if (stored === 'dark') return 'dark'
+      if (stored === 'light') return 'light'
+    } catch { /* ignore */ }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  })
   useEffect(() => {
-    document.documentElement.classList.remove('dark')
-    localStorage.setItem('codepackr_study_theme', 'light')
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    try { localStorage.setItem('codepackr_study_theme', theme) } catch { /* ignore */ }
+  }, [theme])
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const onChange = () => {
+      try {
+        const stored = localStorage.getItem('codepackr_study_theme')
+        if (stored === 'light' || stored === 'dark') return
+      } catch { /* ignore */ }
+      setTheme(mq.matches ? 'dark' : 'light')
+    }
+    mq.addEventListener?.('change', onChange)
+    return () => mq.removeEventListener?.('change', onChange)
   }, [])
 
   const syncRoute = useCallback(() => {
@@ -141,7 +162,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors">
       <CodepackrFamilyBar />
       <Header
         onOpenSearch={() => setSearchOpen(true)}
