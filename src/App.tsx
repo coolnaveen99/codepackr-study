@@ -3,6 +3,7 @@ import { Header } from './components/layout/Header'
 import { Sidebar } from './components/layout/Sidebar'
 import { CodepackrFamilyBar } from './components/CodepackrFamilyBar'
 import { Footer } from './components/layout/Footer'
+import { MobileBottomNav, STUDY_MOBILE_TABS } from './components/MobileBottomNav'
 import { SearchModal } from './components/layout/SearchModal'
 import { HomeView } from './components/HomeView'
 import { ContactView } from './components/ContactView'
@@ -35,6 +36,7 @@ export default function App() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [homeSearchQuery, setHomeSearchQuery] = useState('')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [mobileTab, setMobileTab] = useState('home')
   const [selectedCategory, setSelectedCategory] = useState<ToolDefinition['category'] | 'all'>('all')
 
   useEffect(() => {
@@ -98,6 +100,22 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const handleMobileTab = (tab: string) => {
+    setMobileTab(tab)
+    if (tab === 'home') {
+      handleGoHome()
+    } else if (tab === 'subjects') {
+      handleGoHome()
+      setSidebarOpen(true)
+    } else if (tab === 'practice') {
+      setSearchOpen(true)
+    } else if (tab === 'progress') {
+      setSidebarOpen(true)
+    } else if (tab === 'more') {
+      handleOpenContact()
+    }
+  }
+
   const renderToolComponent = () => {
     if (!currentTool) return null
     switch (currentTool.id) {
@@ -139,7 +157,7 @@ export default function App() {
         onSelectTool={handleSelectTool}
         onGoHome={handleGoHome}
       />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 cp-mobile-main-pad cp-page">
         {showContact ? (
           <ContactView onBack={handleGoHome} />
         ) : currentTool ? (
@@ -148,6 +166,11 @@ export default function App() {
           <HomeView onSelectTool={handleSelectTool} searchQuery={homeSearchQuery} setSearchQuery={setHomeSearchQuery} />
         )}
       </main>
+      <MobileBottomNav
+        activeTab={mobileTab}
+        onSelectTab={handleMobileTab}
+        tabs={STUDY_MOBILE_TABS}
+      />
       <Footer onSelectTool={handleSelectTool} onOpenContact={handleOpenContact} />
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} onSelectTool={handleSelectTool} />
     </div>
