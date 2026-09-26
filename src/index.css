@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Dark mode deferred: class strategy only (never set .dark on html/root). */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   /* Study accent = indigo (tools=blue, finance=green, study=indigo, law=burgundy, astro=amber) */
   --brand: #6366f1;
@@ -7,6 +10,11 @@
   --page-bg: #f8fafc;
   --surface: #ffffff;
   --border: #e2e8f0;
+  color-scheme: light;
+}
+
+html {
+  color-scheme: light;
 }
 
 body {
