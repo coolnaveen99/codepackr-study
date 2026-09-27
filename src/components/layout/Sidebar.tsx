@@ -4,47 +4,10 @@ import {
   X,
   ShieldCheck,
   Lock,
-  GraduationCap,
-  Percent,
-  CalendarCheck,
-  Trophy,
-  ListOrdered,
-  BookOpen,
-  FileText,
-  GitCompare,
-  ListTree,
-  Briefcase,
-  Layers,
-  Clock,
-  HelpCircle,
-  CalendarRange,
-  Scale,
-  Calculator,
-  Atom,
-  type LucideIcon,
 } from 'lucide-react'
 import { TOOLS, CATEGORIES } from '../../data/tools'
 import type { ToolDefinition } from '../../types'
-
-const ICONS: Record<string, LucideIcon> = {
-  GraduationCap,
-  Percent,
-  CalendarCheck,
-  Trophy,
-  ListOrdered,
-  BookOpen,
-  FileText,
-  GitCompare,
-  ListTree,
-  Briefcase,
-  Layers,
-  Clock,
-  HelpCircle,
-  CalendarRange,
-  Scale,
-  Calculator,
-  Atom,
-}
+import { getToolIcon } from '../../lib/tool-icons'
 
 interface SidebarProps {
   isOpen: boolean
@@ -121,21 +84,15 @@ export function Sidebar({
               }}
               className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                 selectedCategory === 'all'
-                  ? 'bg-indigo-600 text-white shadow-sm'
+                  ? 'bg-indigo-50 text-indigo-700 font-semibold'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <span className="flex items-center gap-3">
-                <LayoutGrid className="w-4 h-4 shrink-0" />
-                All Tools
+              <span className="flex items-center gap-2">
+                <LayoutGrid className="w-4 h-4" />
+                All tools
               </span>
-              <span
-                className={`text-xs font-mono px-2 py-0.5 rounded-md ${
-                  selectedCategory === 'all' ? 'bg-white/20' : 'bg-slate-100'
-                }`}
-              >
-                {TOOLS.length}
-              </span>
+              <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-slate-100">{TOOLS.length}</span>
             </button>
           </div>
 
@@ -143,18 +100,14 @@ export function Sidebar({
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 px-3 mb-2 block">
               Categories
             </span>
-            <div className="space-y-1">
+            <div className="space-y-0.5">
               {CATEGORIES.filter((c) => c.id !== 'all').map((cat) => {
                 const active = selectedCategory === cat.id
                 return (
                   <button
                     key={cat.id}
                     type="button"
-                    onClick={() => {
-                      onSelectCategory(cat.id)
-                      onGoHome()
-                      onClose()
-                    }}
+                    onClick={() => onSelectCategory(cat.id)}
                     className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                       active
                         ? 'bg-indigo-50 text-indigo-700 font-semibold'
@@ -183,7 +136,7 @@ export function Sidebar({
               {TOOLS.filter(
                 (t) => selectedCategory === 'all' || t.category === selectedCategory,
               ).map((tool) => {
-                const Icon = ICONS[tool.icon] || LayoutGrid
+                const Icon = getToolIcon(tool.icon)
                 return (
                   <button
                     key={tool.id}
