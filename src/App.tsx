@@ -26,6 +26,7 @@ import { QuizGenerator } from './components/tools/QuizGenerator'
 import { SpacedRepetition } from './components/tools/SpacedRepetition'
 import { ScientificCalculator } from './components/tools/ScientificCalculator'
 import { PeriodicTable } from './components/tools/PeriodicTable'
+import { StoichiometryCalculator } from './components/tools/StoichiometryCalculator'
 import { ToolDefinition } from './types'
 import { getToolBySlug, getCurrentSlug } from './lib/urls'
 
@@ -41,7 +42,6 @@ export default function App() {
   const [mobileTab, setMobileTab] = useState('home')
   const [selectedCategory, setSelectedCategory] = useState<ToolDefinition['category'] | 'all'>('all')
 
-  // Dark mode deferred — light theme only (MOBILE_PREMIUM_UX §1B).
   useEffect(() => {
     document.documentElement.classList.remove('dark')
     try {
@@ -145,6 +145,7 @@ export default function App() {
       case 'unit-converters': return <UnitConverters onBack={handleGoHome} />
       case 'scientific-calculator': return <ScientificCalculator onBack={handleGoHome} />
       case 'periodic-table': return <PeriodicTable onBack={handleGoHome} />
+      case 'stoichiometry-calculator': return <StoichiometryCalculator onBack={handleGoHome} />
       default: return null
     }
   }
