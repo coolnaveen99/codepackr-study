@@ -250,6 +250,23 @@ export const TOOLS: ToolDefinition[] = [
     ]
   },
   {
+    id: 'mock-exam-builder',
+    slug: 'mock-exam-builder',
+    name: 'Mock Exam Builder (Timed + Negative Marking)',
+    category: 'study-aids',
+    description: 'Create full-length mock papers with sections, timers, MCQ/numerical questions, negative marking, and score analytics.',
+    keywords: ['mock exam', 'timed test', 'negative marking', 'practice exam', 'jee mock', 'neet mock'],
+    icon: 'ClipboardList',
+    badge: 'New',
+    seoTitle: 'Mock Exam Builder — Timed Sections & Negative Marking — Codepackr Study',
+    seoDescription: 'Build and take timed mock exams with MCQ and numerical questions, negative marking, and instant review. 100% client-side.',
+    faqs: [
+      { question: 'Can I set different durations per section?', answer: 'Yes. Each section has its own duration in minutes. The total timer is the sum of all section durations.' },
+      { question: 'How does negative marking work?', answer: 'Each question has a marks value and a negative value. Wrong answers subtract the negative amount from your score.' },
+      { question: 'Is my exam data uploaded?', answer: 'No. Everything stays in your browser memory.' },
+    ]
+  },
+  {
     id: 'unit-converters',
     slug: 'unit-converters',
     name: 'Science & Math Unit Converters',
@@ -308,6 +325,22 @@ export const TOOLS: ToolDefinition[] = [
       { question: 'How is the limiting reagent determined?', answer: 'For each reactant with a given amount, compute moles ÷ coefficient. The smallest ratio is the limiting reagent.' },
       { question: 'Which elements are supported for molar mass?', answer: 'H, C, N, O, Na, Mg, Al, Si, P, S, Cl, K, Ca, Fe, Cu, Zn, Br, Ag, I, Ba, Pb.' },
       { question: 'Is equation balancing automatic?', answer: 'You enter coefficients yourself. The tool uses those coefficients for all calculations.' },
+    ]
+  },
+  {
+    id: 'equation-solver',
+    slug: 'equation-solver',
+    name: 'Equation Solver & Step-by-Step',
+    category: 'science',
+    description: 'Solve linear, quadratic, and 2×2 linear systems with full step-by-step explanations. Pure client-side math.',
+    keywords: ['equation solver', 'quadratic formula', 'linear equation', 'system of equations', 'step by step math'],
+    icon: 'Sigma',
+    badge: 'New',
+    seoTitle: 'Equation Solver — Linear, Quadratic & Systems — Codepackr Study',
+    seoDescription: 'Solve linear, quadratic, and 2-variable systems with discriminant analysis and step-by-step solutions. 100% in-browser.',
+    faqs: [
+      { question: 'What equation types are supported?', answer: 'Linear (ax+b=0), quadratic (ax²+bx+c=0) including complex roots, and 2×2 linear systems via Cramer’s rule.' },
+      { question: 'Are steps shown?', answer: 'Yes. Every solution includes the intermediate algebraic steps so you can learn the method.' },
     ]
   },
 ]
