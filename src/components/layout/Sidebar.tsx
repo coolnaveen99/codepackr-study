@@ -44,9 +44,10 @@ export function Sidebar({
 
   return (
     <>
+      {/* Backdrop below header so hamburger stays clickable; click closes menu */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
+          className="fixed top-16 inset-x-0 bottom-0 z-40 bg-black/50 backdrop-blur-sm"
           onClick={onClose}
           aria-hidden
         />
@@ -57,16 +58,17 @@ export function Sidebar({
           fixed top-16 left-0 z-50 h-[calc(100vh-4rem)] w-72 max-w-[85vw]
           flex flex-col border-r border-slate-200 bg-white shadow-xl
           transition-transform duration-300 ease-in-out
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+          ${isOpen ? 'translate-x-0' : '-translate-x-full pointer-events-none'}
         `}
         aria-hidden={!isOpen}
       >
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 lg:hidden">
+        {/* Close row visible on all breakpoints */}
+        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 shrink-0">
           <span className="font-semibold text-slate-900">Menu</span>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900"
+            className="p-1.5 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-50"
             aria-label="Close menu"
           >
             <X className="w-5 h-5" />

@@ -15,15 +15,15 @@ export const Header: React.FC<HeaderProps> = ({
   sidebarOpen,
 }) => {
   return (
-    <header className="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-40 transition-colors">
+    <header className="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-[60] transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3">
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          {/* Left hamburger */}
+          {/* Left hamburger — always above sidebar backdrop */}
           <button
             type="button"
             id="sidebar-toggle-btn"
             onClick={onToggleSidebar}
-            className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors shrink-0 shadow-xs"
+            className="flex size-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:text-slate-900 hover:bg-slate-50 transition-colors shrink-0 shadow-xs relative z-[61]"
             aria-label={sidebarOpen ? 'Close navigation sidebar' : 'Open navigation sidebar'}
             aria-expanded={sidebarOpen}
             aria-controls="app-sidebar"
@@ -33,6 +33,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onGoHome}
+            type="button"
             className="flex items-center gap-2.5 group text-left cursor-pointer min-w-0 focus:outline-none"
             title="Codepackr Study — Home"
           >
