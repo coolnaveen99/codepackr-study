@@ -1,6 +1,5 @@
 /**
- * Merge into src/data/tools.ts — insert after the mock-exam-builder object,
- * before unit-converters. Then delete this file.
+ * Additional study-aids / citations tools composed into tools.ts
  */
 import type { ToolDefinition } from '../types'
 
@@ -37,6 +36,23 @@ export const NEW_STUDY_AIDS: ToolDefinition[] = [
       { question: 'What data is exported?', answer: 'Only localStorage keys that start with codepackr_study_. Theme preferences and other sites are not included.' },
       { question: 'Is the file uploaded anywhere?', answer: 'No. Export downloads to your device; import reads a file you choose. Zero network transfer of pack contents.' },
       { question: 'Will import overwrite existing data?', answer: 'Yes, for keys that already exist. Import merges by key name.' },
+    ],
+  },
+  {
+    id: 'local-reference-manager',
+    slug: 'local-reference-manager',
+    name: 'Local Reference Manager',
+    category: 'citations',
+    description: 'Build bibliography entries offline with APA, MLA, Chicago, and Harvard styles, plus BibTeX export. Nothing leaves your browser.',
+    keywords: ['reference manager', 'bibliography', 'bibtex', 'apa', 'mla', 'citation library', 'local citations'],
+    icon: 'Library',
+    badge: 'New',
+    seoTitle: 'Local Reference Manager — APA MLA Chicago Harvard — Codepackr Study',
+    seoDescription: 'Create and format academic references offline. Export BibTeX. 100% client-side reference manager.',
+    faqs: [
+      { question: 'Can I import BibTeX files?', answer: 'This version focuses on manual entry and BibTeX export. Full BibTeX import is a planned enhancement.' },
+      { question: 'Are styles 100% style-guide perfect?', answer: 'They follow common student patterns for APA 7, MLA 9, Chicago author-date, and Harvard. Always double-check against your institution guide for edge cases.' },
+      { question: 'Is my library uploaded?', answer: 'No. The session library lives only in memory for this tab unless you copy or export text yourself.' },
     ],
   },
 ]

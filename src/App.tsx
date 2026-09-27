@@ -31,6 +31,7 @@ import { MockExamBuilder } from './components/tools/MockExamBuilder'
 import { EquationSolver } from './components/tools/EquationSolver'
 import { FeynmanCoach } from './components/tools/FeynmanCoach'
 import { StudyPackExporter } from './components/tools/StudyPackExporter'
+import { LocalReferenceManager } from './components/tools/LocalReferenceManager'
 import { ToolDefinition } from './types'
 import { getToolBySlug, getCurrentSlug } from './lib/urls'
 
@@ -142,6 +143,7 @@ export default function App() {
       case 'paraphrase-checker': return <ParaphraseChecker onBack={handleGoHome} />
       case 'essay-outline': return <EssayOutline onBack={handleGoHome} />
       case 'resume-sop-counter': return <ResumeSopCounter onBack={handleGoHome} />
+      case 'local-reference-manager': return <LocalReferenceManager onBack={handleGoHome} />
       case 'flashcard-generator': return <FlashcardGenerator onBack={handleGoHome} />
       case 'study-timer': return <StudyTimer onBack={handleGoHome} />
       case 'quiz-generator': return <QuizGenerator onBack={handleGoHome} />
