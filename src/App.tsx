@@ -32,6 +32,7 @@ import { EquationSolver } from './components/tools/EquationSolver'
 import { FeynmanCoach } from './components/tools/FeynmanCoach'
 import { StudyPackExporter } from './components/tools/StudyPackExporter'
 import { LocalReferenceManager } from './components/tools/LocalReferenceManager'
+import { AnkiBridge } from './components/tools/AnkiBridge'
 import { ToolDefinition } from './types'
 import { getToolBySlug, getCurrentSlug } from './lib/urls'
 
@@ -151,6 +152,7 @@ export default function App() {
       case 'mock-exam-builder': return <MockExamBuilder onBack={handleGoHome} />
       case 'feynman-coach': return <FeynmanCoach onBack={handleGoHome} />
       case 'study-pack-exporter': return <StudyPackExporter onBack={handleGoHome} />
+      case 'anki-bridge': return <AnkiBridge onBack={handleGoHome} />
       case 'unit-converters': return <UnitConverters onBack={handleGoHome} />
       case 'scientific-calculator': return <ScientificCalculator onBack={handleGoHome} />
       case 'periodic-table': return <PeriodicTable onBack={handleGoHome} />

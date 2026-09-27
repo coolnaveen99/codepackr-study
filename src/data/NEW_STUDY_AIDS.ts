@@ -55,4 +55,21 @@ export const NEW_STUDY_AIDS: ToolDefinition[] = [
       { question: 'Is my library uploaded?', answer: 'No. The session library lives only in memory for this tab unless you copy or export text yourself.' },
     ],
   },
+  {
+    id: 'anki-bridge',
+    slug: 'anki-bridge',
+    name: 'Anki Bridge (Import / Export Deck)',
+    category: 'study-aids',
+    description: 'Import and export flashcard decks as Anki-compatible tab-separated text. Edit cards locally and download for Anki File → Import.',
+    keywords: ['anki', 'anki import', 'anki export', 'flashcard tsv', 'deck export', 'spaced repetition anki'],
+    icon: 'Layers',
+    badge: 'New',
+    seoTitle: 'Anki Bridge — Import & Export Flashcard Decks — Codepackr Study',
+    seoDescription: 'Convert between pasted TSV/CSV and Anki-ready tab-separated decks. Edit cards in the browser. Nothing is uploaded.',
+    faqs: [
+      { question: 'How do I import into Anki?', answer: 'Download the .txt file, then in Anki use File → Import. Set the field separator to Tab and map columns to Front, Back, and Tags.' },
+      { question: 'Does this support .apkg files?', answer: 'Not yet. Anki’s .apkg is a binary package. Use tab-separated text import/export, which Anki supports natively.' },
+      { question: 'Where are cards stored?', answer: 'Optionally in localStorage (codepackr_study_anki_deck). Export downloads stay on your device only.' },
+    ],
+  },
 ]
