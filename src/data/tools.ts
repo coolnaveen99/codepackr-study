@@ -293,6 +293,23 @@ export const TOOLS: ToolDefinition[] = [
       { question: 'Does this need the network?', answer: 'No. Element data and formulas are bundled in the page.' }
     ]
   },
+  {
+    id: 'stoichiometry-calculator',
+    slug: 'stoichiometry-calculator',
+    name: 'Chemistry Stoichiometry & Mole Calculator',
+    category: 'science',
+    description: 'Find limiting reagent, theoretical yield, and percent yield from balanced coefficients and given amounts. Molar mass lookup for common elements.',
+    keywords: ['stoichiometry', 'limiting reagent', 'mole calculator', 'theoretical yield', 'percent yield', 'chemistry calculator'],
+    icon: 'FlaskConical',
+    badge: 'New',
+    seoTitle: 'Stoichiometry Calculator — Limiting Reagent & Yield — Codepackr Study',
+    seoDescription: 'Calculate limiting reagent, theoretical yield in moles and grams, and percent yield. 100% client-side chemistry helper.',
+    faqs: [
+      { question: 'How is the limiting reagent determined?', answer: 'For each reactant with a given amount, compute moles ÷ coefficient. The smallest ratio is the limiting reagent.' },
+      { question: 'Which elements are supported for molar mass?', answer: 'H, C, N, O, Na, Mg, Al, Si, P, S, Cl, K, Ca, Fe, Cu, Zn, Br, Ag, I, Ba, Pb.' },
+      { question: 'Is equation balancing automatic?', answer: 'You enter coefficients yourself. The tool uses those coefficients for all calculations.' },
+    ]
+  },
 ]
 
 export const CATEGORIES: { id: ToolDefinition['category'] | 'all'; label: string; count: number }[] = [
