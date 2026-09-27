@@ -34,3 +34,15 @@ export function formatNumber(val: number, decimals: number = 2): string {
   if (isNaN(val) || !isFinite(val)) return '0'
   return Number(val.toFixed(decimals)).toString()
 }
+
+/** Prefer crypto.randomUUID; fallback for older browsers / non-secure contexts */
+export function newId(): string {
+  try {
+    if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+      return crypto.randomUUID()
+    }
+  } catch {
+    /* ignore */
+  }
+  return `id-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+}
