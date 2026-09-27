@@ -17,6 +17,8 @@ import { StudyTimer } from './components/tools/StudyTimer'
 import { AttendanceCalculator } from './components/tools/AttendanceCalculator'
 import { SgpaPercentage } from './components/tools/SgpaPercentage'
 import { MarksToGrade } from './components/tools/MarksToGrade'
+import { WeightedGradeCalculator } from './components/tools/WeightedGradeCalculator'
+import { GpaGoalPlanner } from './components/tools/GpaGoalPlanner'
 import { ParaphraseChecker } from './components/tools/ParaphraseChecker'
 import { EssayOutline } from './components/tools/EssayOutline'
 import { ResumeSopCounter } from './components/tools/ResumeSopCounter'
@@ -129,6 +131,8 @@ export default function App() {
       case 'attendance-calculator': return <AttendanceCalculator onBack={handleGoHome} />
       case 'sgpa-percentage': return <SgpaPercentage onBack={handleGoHome} />
       case 'marks-to-grade': return <MarksToGrade onBack={handleGoHome} />
+      case 'weighted-grade-calculator': return <WeightedGradeCalculator onBack={handleGoHome} />
+      case 'gpa-goal-planner': return <GpaGoalPlanner onBack={handleGoHome} />
       case 'word-counter': return <WordCounter onBack={handleGoHome} />
       case 'citation-generator': return <CitationGenerator onBack={handleGoHome} />
       case 'paraphrase-checker': return <ParaphraseChecker onBack={handleGoHome} />
