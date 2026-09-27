@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect, useRef } from 'react'
-import { ClipboardList } from 'lucide-react'
 import { ToolHeader } from '../ui/ToolHeader'
 import { FaqSection } from '../ui/FaqSection'
 import { copyToClipboard } from '../../lib/utils'
