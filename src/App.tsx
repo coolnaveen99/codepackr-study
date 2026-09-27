@@ -27,6 +27,8 @@ import { SpacedRepetition } from './components/tools/SpacedRepetition'
 import { ScientificCalculator } from './components/tools/ScientificCalculator'
 import { PeriodicTable } from './components/tools/PeriodicTable'
 import { StoichiometryCalculator } from './components/tools/StoichiometryCalculator'
+import { MockExamBuilder } from './components/tools/MockExamBuilder'
+import { EquationSolver } from './components/tools/EquationSolver'
 import { ToolDefinition } from './types'
 import { getToolBySlug, getCurrentSlug } from './lib/urls'
 
@@ -142,10 +144,12 @@ export default function App() {
       case 'study-timer': return <StudyTimer onBack={handleGoHome} />
       case 'quiz-generator': return <QuizGenerator onBack={handleGoHome} />
       case 'spaced-repetition': return <SpacedRepetition onBack={handleGoHome} />
+      case 'mock-exam-builder': return <MockExamBuilder onBack={handleGoHome} />
       case 'unit-converters': return <UnitConverters onBack={handleGoHome} />
       case 'scientific-calculator': return <ScientificCalculator onBack={handleGoHome} />
       case 'periodic-table': return <PeriodicTable onBack={handleGoHome} />
       case 'stoichiometry-calculator': return <StoichiometryCalculator onBack={handleGoHome} />
+      case 'equation-solver': return <EquationSolver onBack={handleGoHome} />
       default: return null
     }
   }
