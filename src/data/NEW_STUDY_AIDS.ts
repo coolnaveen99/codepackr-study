@@ -1,5 +1,7 @@
 /**
- * Additional study-aids / citations tools composed into tools.ts
+ * Permanent registry fragment for newer study-aids / citations tools.
+ * Composed in tools.ts as: [...CORE_TOOLS, ...NEW_STUDY_AIDS]
+ * Do not delete this file.
  */
 import type { ToolDefinition } from '../types'
 
