@@ -8,7 +8,8 @@
   --cp-header-height: 56px; --cp-bottom-nav-height: 56px;
   --cp-ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
-.cp-no-h-scroll, .cp-page { max-width: 100%; min-width: 0; overflow-x: clip; }
+.cp-no-h-scroll { max-width: 100%; min-width: 0; overflow-x: clip; }
+.cp-page { min-width: 0; overflow-x: clip; }
 .cp-break-anywhere { overflow-wrap: anywhere; word-break: break-word; }
 .cp-mobile-main-pad { padding-bottom: calc(var(--cp-bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 12px); }
 @media (min-width: 1024px) { .cp-mobile-main-pad { padding-bottom: 0; } }
